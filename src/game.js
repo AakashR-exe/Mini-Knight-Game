@@ -821,7 +821,7 @@ class GameEngine {
             this.ctx.fillStyle = '#ffffff';
             this.ctx.shadowColor = '#38bdf8';
             this.ctx.shadowBlur = 18;
-            this.ctx.fillText('UMBRAL EDGE', this.width / 2, 180);
+            this.ctx.fillText('UMBRAL DUELIST', this.width / 2, 180);
 
             this.ctx.font = '16px "Cinzel", sans-serif';
             this.ctx.fillStyle = '#94a3b8';

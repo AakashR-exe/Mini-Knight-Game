@@ -1,12 +1,14 @@
-# Umbral Edge ⚔️
+# Umbral Duelist ⚔️
 
-A fast-paced 1v1 action boss duel platformer inspired by the fluid combat of dark fantasy platformers like *Swordigo*. Designed to run smoothly and lag-free in any web browser with zero external asset dependencies across **10 escalating realms of difficulty**.
+A fast-paced 1v1 action boss duel platformer. Designed to run smoothly in any web browser with zero external asset dependencies across **10 escalating realms of difficulty**.
+
+Play online: https://aakashr-exe.github.io/Mini-Knight-Game/
 
 ---
 
 ## 🎮 Highlights & Mechanics
 
-- **Original Identity & Hero**: Play as the **Umbral Duelist**—a hooded blademaster with glowing cyan visor eyes, flowing cloak, and an energized blade.
+- **Original Identity & Hero**: Play as the Umbral Duelist—a hooded blademaster with glowing cyan visor eyes, flowing cloak, and an energized blade.
 - **Pure 1v1 Boss Duels**: 10 distinct, handcrafted boss encounters (one enemy per level).
 - **Brisk 30–40s Encounters**: Each encounter is tuned for rapid, high-intensity pattern-reading and execution.
 - **Difficulty Progression**: Progresses from **NOVICE** to the unrelenting bullet-hell of **DIFFICULTY: HELL** on Level 10.
