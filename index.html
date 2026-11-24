@@ -45,13 +45,13 @@
         <div id="game-container">
             <canvas id="gameCanvas"></canvas>
 
-            <!-- Round transition controls -->
+            <!-- Level progression controls -->
             <div class="screen-actions">
                 <button id="action-btn" class="btn btn-primary" type="button">
                     ⚔️ START GAME (SPACE)
                 </button>
-                <button id="next-btn" class="btn btn-primary" type="button" style="display: none;">
-                    ⏩ NEXT ROUND (SPACE)
+                <button id="next-btn" class="btn btn-primary" type="button" aria-label="Proceed to next level" style="display: none;">
+                    ⏩ NEXT LEVEL (SPACE)
                 </button>
             </div>
         </div>
@@ -122,8 +122,11 @@
             const lvlButtons = document.querySelectorAll('.lvl-btn');
 
             function updateUIState() {
-                const isRoundComplete = engine.state === 'level_win';
-                nextBtn.style.display = isRoundComplete ? 'inline-flex' : 'none';
+                const isLevelComplete = engine.state === 'level_win';
+                nextBtn.style.display = isLevelComplete ? 'inline-flex' : 'none';
+                const hasNextLevel = engine.currentLevel < engine.maxLevels;
+                nextBtn.textContent = hasNextLevel ? '⏩ NEXT LEVEL (SPACE)' : '🏆 COMPLETE RUN (SPACE)';
+                nextBtn.setAttribute('aria-label', hasNextLevel ? 'Proceed to next level' : 'Complete the run');
                 actionBtn.style.display = engine.state === 'title' || engine.state === 'game_over' || engine.state === 'all_clear'
                     ? 'inline-flex'
                     : 'none';

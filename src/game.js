@@ -754,6 +754,30 @@ class GameEngine {
         this.ctx.shadowBlur = 0;
         this.ctx.fillText(`POTIONS  [C]`, potionStartX - 6, potionY + 10);
 
+        // --- Mana (Spell Resource) ---
+        const manaBarX = 64;
+        const manaBarY = 112;
+        const manaBarWidth = 128;
+        const manaRatio = Math.max(0, Math.min(1, this.player.mana / this.player.maxMana));
+        this.ctx.font = 'bold 10px "Segoe UI", sans-serif';
+        this.ctx.fillStyle = '#c4b5fd';
+        this.ctx.textAlign = 'left';
+        this.ctx.fillText('MANA', manaBarX, manaBarY - 5);
+        this.ctx.textAlign = 'right';
+        this.ctx.fillText(`${Math.floor(this.player.mana)}/${this.player.maxMana}`, manaBarX + manaBarWidth, manaBarY - 5);
+
+        this.ctx.fillStyle = '#0f172a';
+        this.ctx.beginPath();
+        this.ctx.roundRect(manaBarX, manaBarY, manaBarWidth, 8, 4);
+        this.ctx.fill();
+        this.ctx.fillStyle = '#a855f7';
+        this.ctx.shadowColor = '#9333ea';
+        this.ctx.shadowBlur = 7;
+        this.ctx.beginPath();
+        this.ctx.roundRect(manaBarX + 1, manaBarY + 1, (manaBarWidth - 2) * manaRatio, 6, 3);
+        this.ctx.fill();
+        this.ctx.shadowBlur = 0;
+
         // --- 3. Boss Health Bar (Top Center) ---
         if (this.boss && !this.boss.isDead) {
             const barWidth = 460;
@@ -863,7 +887,10 @@ class GameEngine {
 
             this.ctx.font = 'bold 18px "Cinzel", sans-serif';
             this.ctx.fillStyle = '#bae6fd';
-            this.ctx.fillText('PRESS SPACE OR CLICK "NEXT LEVEL" TO PROCEED', this.width / 2, 380);
+            const victoryPrompt = this.currentLevel < this.maxLevels
+                ? 'PRESS SPACE OR CLICK "NEXT LEVEL" TO PROCEED'
+                : 'PRESS SPACE OR CLICK "COMPLETE RUN" TO FINISH';
+            this.ctx.fillText(victoryPrompt, this.width / 2, 380);
         } else if (this.state === 'game_over') {
             this.ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
             this.ctx.fillRect(0, 0, this.width, this.height);
