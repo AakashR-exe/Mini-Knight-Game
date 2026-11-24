@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Umbral Edge | 1v1 Blade Duel Platformer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2L15 8L21 9L16.5 13.5L18 20L12 16.5L6 20L7.5 13.5L3 9L9 8L12 2Z" fill="rgba(56, 189, 248, 0.4)" stroke="#38bdf8" stroke-width="1.8"/>
+                    <line x1="4" y1="20" x2="20" y2="4" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>UMBRAL EDGE</h1>
+        </div>
+
+        <div class="header-actions">
+            <!-- Level Select Badges with Difficulty & Arena Theme Tooltips -->
+            <div class="level-badges">
+                <button class="lvl-btn active" data-lvl="1" title="Lv1: Moss Grotto [NOVICE] - Grimmhorn">1</button>
+                <button class="lvl-btn" data-lvl="2" title="Lv2: Mantis Cliffs [APPRENTICE] - Kaelen">2</button>
+                <button class="lvl-btn" data-lvl="3" title="Lv3: Soul Sanctum [ADEPT] - Lord Malakar">3</button>
+                <button class="lvl-btn" data-lvl="4" title="Lv4: Crystal Mine [CHALLENGING] - Titan Goliath">4</button>
+                <button class="lvl-btn" data-lvl="5" title="Lv5: The Void Abyss [EXPERT] - The Void Nemesis">5</button>
+                <button class="lvl-btn" data-lvl="6" title="Lv6: Amber Hive [MASTER] - Queen Vespira">6</button>
+                <button class="lvl-btn" data-lvl="7" title="Lv7: Scarlet Pyre [TORMENT] - Troupe Master Ignis">7</button>
+                <button class="lvl-btn" data-lvl="8" title="Lv8: Abyssal Trench [NIGHTMARE] - Mor'gath">8</button>
+                <button class="lvl-btn" data-lvl="9" title="Lv9: Gilded Citadel [INFERNAL] - Regent Valerius">9</button>
+                <button class="lvl-btn" data-lvl="10" title="Lv10: SOLAR HELL [HELL] - Sovereign Lumina">10</button>
+            </div>
+
+            <!-- Sound toggle -->
+            <button id="sound-btn" class="btn" title="Toggle Sound (M)">
+                🔊 Sound ON
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Game Canvas Wrapper -->
+    <div id="game-wrapper">
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- Round transition controls -->
+            <div class="screen-actions">
+                <button id="action-btn" class="btn btn-primary" type="button">
+                    ⚔️ START GAME (SPACE)
+                </button>
+                <button id="next-btn" class="btn btn-primary" type="button" style="display: none;">
+                    ⏩ NEXT ROUND (SPACE)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- On-screen Touch Controls (for Mobile, Tablet, Trackpad) -->
+    <div id="touch-controls">
+        <div class="touch-cluster">
+            <button id="touch-left" class="touch-btn touch-btn--direction" type="button" aria-label="Move left">◀</button>
+            <button id="touch-right" class="touch-btn touch-btn--direction" type="button" aria-label="Move right">▶</button>
+            <button id="touch-down" class="touch-btn touch-btn--pogo" type="button" aria-label="Pogo or focus heal">▼ POGO</button>
+        </div>
+
+        <div class="touch-cluster">
+            <button id="touch-attack" class="touch-btn touch-btn--attack" type="button">SLASH</button>
+            <button id="touch-jump" class="touch-btn touch-btn--jump" type="button">JUMP</button>
+            <button id="touch-dash" class="touch-btn touch-btn--dash" type="button">DASH</button>
+            <button id="touch-spell" class="touch-btn touch-btn--spell" type="button">SOUL</button>
+        </div>
+    </div>
+
+    <!-- Game Guide / Mechanics Panel -->
+    <div class="game-info-panel">
+        <div class="info-card">
+            <h3>⚔️ Blade Combos & Pogo</h3>
+            <ul class="key-list">
+                <li><span class="badge">J</span> or <span class="badge">Z</span> or <span class="badge">Left Click</span> 3-Hit Slash Combo</li>
+                <li><span class="badge">W</span> + <span class="badge">Slash</span> Upward Slash (hits aerial targets)</li>
+                <li><span class="badge">S</span> + <span class="badge">Slash</span> <strong>Down Pogo Strike</strong> (Air bounce resets jumps & dash!)</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h3>💨 Dash & Runic Spells</h3>
+            <ul class="key-list">
+                <li><span class="badge">L</span> or <span class="badge">Shift</span> <strong>Shadow Dash</strong> (Invincibility frames)</li>
+                <li><span class="badge">K</span> or <span class="badge">X</span> or <span class="badge">Right Click</span> <strong>Aether Blast</strong> (Ranged spell)</li>
+                <li><span class="badge">C</span> or <span class="badge">H</span> (Hold) <strong>Focus Heal</strong> (Recovers 1 Vitality Rune)</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h3>⏱️ 30-40s Duel Objectives</h3>
+            <ul class="key-list">
+                <li>Watch boss telegraphs (flashing eyes & warning cues).</li>
+                <li>Pogo off charges and ground hazards to punish enemies.</li>
+                <li>Use the 75%, 40%, and 20% HP stagger windows for free combos.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script loading -->
+    <script src="src/audio.js"></script>
+    <script src="src/particles.js"></script>
+    <script src="src/player.js"></script>
+    <script src="src/enemies.js"></script>
+    <script src="src/game.js"></script>
+
+    <script>
+        // Game Initialization and UI Wiring
+        window.addEventListener('DOMContentLoaded', () => {
+            const engine = new GameEngine();
+            engine.start();
+
+            const actionBtn = document.getElementById('action-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const soundBtn = document.getElementById('sound-btn');
+            const lvlButtons = document.querySelectorAll('.lvl-btn');
+
+            function updateUIState() {
+                const isRoundComplete = engine.state === 'level_win';
+                nextBtn.style.display = isRoundComplete ? 'inline-flex' : 'none';
+                actionBtn.style.display = engine.state === 'title' || engine.state === 'game_over' || engine.state === 'all_clear'
+                    ? 'inline-flex'
+                    : 'none';
+
+                if (engine.state === 'title') {
+                    actionBtn.textContent = '⚔️ START GAME (SPACE)';
+                } else if (engine.state === 'game_over') {
+                    actionBtn.textContent = '🔄 RETRY LEVEL (SPACE)';
+                } else if (engine.state === 'all_clear') {
+                    actionBtn.textContent = '🔁 PLAY AGAIN (SPACE)';
+                }
+
+                // Update Level Badges
+                lvlButtons.forEach(btn => {
+                    const lvl = parseInt(btn.dataset.lvl);
+                    if (lvl === engine.currentLevel) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+
+            // Sync button periodically
+            setInterval(updateUIState, 100);
+
+            // Action Button Click
+            actionBtn.addEventListener('click', () => {
+                window.soundEngine.init();
+                if (engine.state === 'title') {
+                    engine.startLevel(engine.currentLevel);
+                } else if (engine.state === 'game_over') {
+                    engine.restartCurrentLevel();
+                } else if (engine.state === 'all_clear') {
+                    engine.startLevel(1);
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                window.soundEngine.init();
+                if (engine.state === 'level_win') engine.nextLevel();
+            });
+
+            // Keyboard shortcut for the visible round action
+            window.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    if (engine.state === 'title') {
+                        engine.startLevel(engine.currentLevel);
+                        e.preventDefault();
+                    } else if (engine.state === 'level_win') {
+                        engine.nextLevel();
+                        e.preventDefault();
+                    } else if (engine.state === 'game_over') {
+                        engine.restartCurrentLevel();
+                        e.preventDefault();
+                    } else if (engine.state === 'all_clear') {
+                        engine.startLevel(1);
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            // Sound Toggle Button
+            soundBtn.addEventListener('click', () => {
+                const isMuted = window.soundEngine.toggleMute();
+                soundBtn.textContent = isMuted ? '🔇 Sound OFF' : '🔊 Sound ON';
+            });
+
+            // Level Selection Badges
+            lvlButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lvl = parseInt(btn.dataset.lvl);
+                    engine.startLevel(lvl);
+                });
+            });
+
+            // Touch / Virtual Pad controls
+            function bindTouch(btnId, onDown, onUp) {
+                const elem = document.getElementById(btnId);
+                if (!elem) return;
+                elem.addEventListener('pointerdown', (e) => {
+                    e.preventDefault();
+                    window.soundEngine.init();
+                    onDown();
+                    elem.setPointerCapture(e.pointerId);
+                });
+                const release = (e) => {
+                    e.preventDefault();
+                    if (onUp) onUp();
+                };
+                elem.addEventListener('pointerup', release);
+                elem.addEventListener('pointercancel', release);
+            }
+
+            bindTouch('touch-left', () => engine.input.left = true, () => engine.input.left = false);
+            bindTouch('touch-right', () => engine.input.right = true, () => engine.input.right = false);
+            bindTouch('touch-down', () => {
+                engine.input.down = true;
+                engine.input.focus = true;
+            }, () => {
+                engine.input.down = false;
+                engine.input.focus = false;
+            });
+            bindTouch('touch-jump', () => {
+                engine.input.jump = true;
+                engine.input.jumpPressed = true;
+            }, () => engine.input.jump = false);
+            bindTouch('touch-attack', () => engine.handleAttack());
+            bindTouch('touch-dash', () => engine.player.triggerDash());
+            bindTouch('touch-spell', () => engine.player.castSpell());
+        });
+    </script>
+</body>
+</html>
