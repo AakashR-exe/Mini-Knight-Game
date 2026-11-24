@@ -10,6 +10,7 @@ Play online: https://aakashr-exe.github.io/Mini-Knight-Game/
 
 - **Original Identity & Hero**: Play as the Umbral Duelist—a hooded blademaster with glowing cyan visor eyes, flowing cloak, and an energized blade.
 - **Pure 1v1 Boss Duels**: 10 distinct, handcrafted boss encounters (one enemy per level).
+- **Level Progression**: After each victory, choose **NEXT LEVEL** or press `Space` to face the next guardian; the final victory completes the run.
 - **Brisk 30–40s Encounters**: Each encounter is tuned for rapid, high-intensity pattern-reading and execution.
 - **Difficulty Progression**: Progresses from **NOVICE** to the unrelenting bullet-hell of **DIFFICULTY: HELL** on Level 10.
 - **10 Distinct Arena Themes**: Every realm features a unique aesthetic background, color palette, architectural runes, atmospheric motes, and floor accents.

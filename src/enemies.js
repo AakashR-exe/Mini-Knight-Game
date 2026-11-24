@@ -112,6 +112,11 @@ class BaseEnemy {
     updateBase(player, arena) {
         if (this.hitFlashTimer > 0) this.hitFlashTimer--;
 
+        if (this.isDead) {
+            this.deathTimer--;
+            return;
+        }
+
         // Face player when idle or telegraphing
         if (this.state === 'idle' || this.state === 'telegraph') {
             this.facing = player.x < this.x ? -1 : 1;

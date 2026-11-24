@@ -343,9 +343,9 @@ class GameEngine {
                 // Left click: Attack
                 this.handleAttack();
             } else if (e.button === 2) {
-                // Right click: Use Potion
+                // Right click: Cast Aether Blast
                 e.preventDefault();
-                this.player.usePotion();
+                this.player.castSpell();
             }
         });
 
@@ -864,7 +864,7 @@ class GameEngine {
             this.ctx.font = '13px "Segoe UI", sans-serif';
             this.ctx.fillStyle = '#64748b';
             this.ctx.fillText('A/D: Move  |  W/Space: Jump (Double Jump)  |  J/Left Click: Slash Combo  |  Down+Slash: Pogo Bounce', this.width / 2, 420);
-            this.ctx.fillText('L/Shift: Shadow Dash (i-frames)  |  K/X: Aether Blast  |  C/H/Right Click: Use Potion  |  M: Mute', this.width / 2, 445);
+            this.ctx.fillText('L/Shift: Shadow Dash (i-frames)  |  K/X/Right Click: Aether Blast  |  C/H: Use Potion  |  M: Mute', this.width / 2, 445);
         } else if (this.state === 'level_win') {
             this.ctx.fillStyle = 'rgba(2, 6, 23, 0.75)';
             this.ctx.fillRect(0, 0, this.width, this.height);
